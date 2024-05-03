@@ -51,7 +51,7 @@ function crearFila(producto) {
     const tdPrecio = document.createElement('td');
     tdPrecio.innerText = precio;
     const btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-success');
+    btn.classList.add('btn', 'btn-danger');
     btn.innerText = 'Eliminar';
     const tdBtn = document.createElement('td');
 
