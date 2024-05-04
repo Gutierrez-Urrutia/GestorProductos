@@ -1,4 +1,4 @@
-var listaProductos = [];
+let listaProductos = [];
 
 
 function crearProducto() {
