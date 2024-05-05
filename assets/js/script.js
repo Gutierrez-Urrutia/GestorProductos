@@ -65,12 +65,12 @@ function crearFila(producto) {
     });
 
     btnActualizar.addEventListener('click', () => {
-        const idActualizar = document.getElementById('id').value;
+        
         const nuevoNombre = document.getElementById('nombre').value;
         const nuevoPrecio = document.getElementById('precio').value;
 
 
-        const producto = listaProductos.find(producto => producto.id === idActualizar);
+        const producto = listaProductos.find(producto => producto.id === id);
 
         if (nuevoNombre === '' || nuevoPrecio === '') {
             alert('Todos los campos son obligatorios');
