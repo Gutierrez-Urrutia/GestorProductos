@@ -1,7 +1,7 @@
-var listaProductos = [];
+let listaProductos = [];
 
+function crearLista() {
 
-function crearProducto() {
     let id = document.getElementById('id').value;
     let nombre = document.getElementById('nombre').value;
     let precio = document.getElementById('precio').value;
@@ -9,34 +9,25 @@ function crearProducto() {
 
     if (id === '' || nombre === '' || precio === '') {
         alert('Todos los campos son obligatorios');
-        return producto;
     } else {
-        const producto = {
+        producto = {
             id,
             nombre,
             precio
         };
-        return producto;
-    };
-
-};
-
-function crearLista() {
-
-    const nuevoProducto = crearProducto();
-    let existeProducto;
-
-    if (Object.keys(nuevoProducto).length > 0 && listaProductos.length === 0) {
-        listaProductos.push(nuevoProducto);
-        insertarFila(nuevoProducto);
-    } else if(listaProductos.length > 0) {
-        existeProducto = listaProductos.some(producto => producto.id === nuevoProducto.id);
-        if (existeProducto) {
-            alert('El id ya existe, intente nuevamente.');
+        if (listaProductos.length === 0) {
+            listaProductos.push(producto);
+            insertarFila(producto);
         } else {
-            listaProductos.push(nuevoProducto);
-            insertarFila(nuevoProducto);
+            let existeProducto = listaProductos.some(producto => producto.id === id);
+            if (existeProducto) {
+                alert('El id ya existe, intente nuevamente.');
+            } else {
+                listaProductos.push(producto);
+                insertarFila(producto);
+            };
         };
+
     };
 };
 
@@ -50,9 +41,12 @@ function crearFila(producto) {
     tdNombre.innerText = nombre;
     const tdPrecio = document.createElement('td');
     tdPrecio.innerText = precio;
-    const btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-success');
-    btn.innerText = 'Eliminar';
+    const btnBorrar = document.createElement('button');
+    btnBorrar.classList.add('btn', 'btn-danger');
+    btnBorrar.innerText = 'Eliminar';
+    const btnActualizar = document.createElement('button');
+    btnActualizar.classList.add('btn', 'btn-warning', 'ms-2');
+    btnActualizar.innerText = 'Actualizar';
     const tdBtn = document.createElement('td');
 
     tr.appendChild(tdId);
@@ -60,20 +54,43 @@ function crearFila(producto) {
     tr.appendChild(tdPrecio);
     tr.appendChild(tdBtn);
 
-    tdBtn.appendChild(btn);
 
-    btn.addEventListener('click', () => {
+    tdBtn.appendChild(btnBorrar);
+    tdBtn.appendChild(btnActualizar);
+
+    btnBorrar.addEventListener('click', () => {
         tr.remove();
         listaProductos = listaProductos.filter(producto => producto.id !== id);
+    });
+
+    btnActualizar.addEventListener('click', () => {
+        const idActualizar = document.getElementById('id').value;
+        const nuevoNombre = document.getElementById('nombre').value;
+        const nuevoPrecio = document.getElementById('precio').value;
+
+
+        const producto = listaProductos.find(producto => producto.id === idActualizar);
+
+        if (nuevoNombre === '' || nuevoPrecio === '') {
+            alert('Todos los campos son obligatorios');
+
+        } else {
+            producto.nombre = nuevoNombre;
+            producto.precio = nuevoPrecio;
+
+
+            tdNombre.innerText = nuevoNombre;
+            tdPrecio.innerText = nuevoPrecio;
+        };
+
     });
 
     return tr;
 
 };
 
-function insertarFila(producto){
+function insertarFila(producto) {
     const body = document.getElementById('body');
     const nuevaFila = crearFila(producto);
     body.appendChild(nuevaFila);
 };
-
