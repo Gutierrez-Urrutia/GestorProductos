@@ -1,5 +1,5 @@
 let listaProductos = [];
-let listaProductos = [];
+
 
 function crearLista() {
 
